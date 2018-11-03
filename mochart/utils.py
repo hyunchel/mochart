@@ -1,5 +1,6 @@
 """Utility functions shared by all providers."""
 from collections import OrderedDict
+from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
@@ -38,3 +39,9 @@ def get_ranks(url, selectors):
         selectors,
     )
 
+
+def append_day_time(url, day_time):
+    """Add date string to the URL."""
+    if day_time is None:
+        day_time = datetime.now()
+    return f"{url}?dayTime={day_time.strftime('%Y%m%d%H')}"
