@@ -1,28 +1,59 @@
 """Parse ranks from Melon Music Chart."""
-import requests
-from bs4 import BeautifulSoup
+from mochart.utils import get_ranks
 
 
 def realtime():
     """Get latest real-time ranks."""
-    # Get HTML document.
     url = "https://www.melon.com/chart/index.htm"
-    headers = {
-        "User-Agent": "mochart/0.0.1",
+    selectors = {
+        "title": "div.ellipsis.rank01 > span > a",
+        "artist": "div.ellipsis.rank02 > span > a",
+        "album": "div.ellipsis.rank03 > a",
     }
-    resp = requests.get(url, headers=headers)
+    return get_ranks(url, selectors)
 
-    # Parse HTML.
-    html_doc = resp.text
-    soup = BeautifulSoup(html_doc, "html.parser")
-    table = soup.table
 
-    # These are in order.
-    titles = [link.text for link in table.select("div.ellipsis.rank01 > span > a")]
-    artists = [link.text for link in table.select("div.ellipsis.rank02 > span > a")]
-    albums = [link.text for link in table.select("div.ellipsis.rank02 > a")]
+def trend():
+    """Get latest trending ranks."""
+    url = "https://www.melon.com/chart/rise/index.htm"
+    selectors = {
+        "title": "div.ellipsis.rank01 > span > a",
+        "artist": "div.ellipsis.rank02 > span > a",
+        "album": "div.ellipsis.rank03 > a",
+    }
+    return get_ranks(url, selectors)
 
-    return [
-        {"title": title, "artist": artist, "album": album}
-        for title, artist, album in zip(titles, artists, albums)
-    ]
+
+
+def day():
+    """Get latest daily ranks."""
+    url = "https://www.melon.com/chart/day/index.htm"
+    selectors = {
+        "title": "div.ellipsis.rank01 > span > a",
+        "artist": "div.ellipsis.rank02 > span > a",
+        "album": "div.ellipsis.rank03 > a",
+    }
+    return get_ranks(url, selectors)
+
+
+
+def week():
+    """Get latest weekly ranks."""
+    url = "https://www.melon.com/chart/week/index.htm"
+    selectors = {
+        "title": "div.ellipsis.rank01 > span > a",
+        "artist": "div.ellipsis.rank02 > span > a",
+        "album": "div.ellipsis.rank03 > a",
+    }
+    return get_ranks(url, selectors)
+
+
+def month():
+    """Get latest monthly ranks."""
+    url = "https://www.melon.com/chart/month/index.htm"
+    selectors = {
+        "title": "div.ellipsis.rank01 > span > a",
+        "artist": "div.ellipsis.rank02 > span > a",
+        "album": "div.ellipsis.rank03 > a",
+    }
+    return get_ranks(url, selectors)
