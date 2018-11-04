@@ -2,6 +2,7 @@
 from collections import OrderedDict
 from datetime import datetime
 
+import pytz
 import requests
 from bs4 import BeautifulSoup
 
@@ -44,4 +45,7 @@ def append_day_time(url, day_time):
     """Add date string to the URL."""
     if day_time is None:
         day_time = datetime.now()
-    return f"{url}?dayTime={day_time.strftime('%Y%m%d%H')}"
+    seoul = pytz.timezone("Asia/Seoul")
+    seoul_dt = day_time.astimezone(seoul)
+    dt_str = seoul_dt.strftime('%Y%m%d%H')
+    return f"{url}?dayTime={dt_str}"
