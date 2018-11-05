@@ -10,7 +10,8 @@ from bs4 import BeautifulSoup
 def get_html_document(url):
     """Get HTML document of given URL."""
     headers = {
-        "User-Agent": "mochart/0.0.1",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
     }
     resp = requests.get(url, headers=headers)
     return resp.text
@@ -41,11 +42,18 @@ def get_ranks(url, selectors):
     )
 
 
+def localize_time(day_time):
+    """Return Seoul time."""
+    if day_time is None:
+        day_time = datetime.now()
+    seoul = pytz.timezone("Asia/Seoul")
+    return day_time.astimezone(seoul)
+
+
 def append_day_time(url, day_time):
     """Add date string to the URL."""
     if day_time is None:
         day_time = datetime.now()
-    seoul = pytz.timezone("Asia/Seoul")
-    seoul_dt = day_time.astimezone(seoul)
+    seoul_dt = localize_time(day_time)
     dt_str = seoul_dt.strftime('%Y%m%d%H')
     return f"{url}?dayTime={dt_str}"
