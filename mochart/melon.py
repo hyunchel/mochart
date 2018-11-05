@@ -9,36 +9,40 @@ SELECTORS = {
 }
 
 
-def realtime(day_time=None):
-    """Get latest real-time ranks."""
+def realtime():
+    """Get latest real-time ranks.
+    
+    NOTE: According to Melon's public announcement,
+          "real-time" work will pause for 6 hours every day from 1AM - 7AM.
+          Reference: https://www.melon.com/customer/announce/infomAnnounce.htm?seq=668
+    """
     # Do not need any day time.
     url = "https://www.melon.com/chart/index.htm"
     return utils.get_ranks(url, SELECTORS)
 
 
 def trend(day_time=None):
-    """Get latest trending ranks."""
-    base_url = "https://www.melon.com/chart/rise/index.htm"
-    url = utils.append_day_time(base_url, day_time)
+    """Get latest trending ranks.
+    
+    NOTE: Historical value refreshes daily.
+    """
+    url = "https://www.melon.com/chart/rise/index.htm"
     return utils.get_ranks(url, SELECTORS)
 
 
-def day(day_time=None):
+def day():
     """Get latest daily ranks."""
-    base_url = "https://www.melon.com/chart/day/index.htm"
-    url = utils.append_day_time(base_url, day_time)
+    url = "https://www.melon.com/chart/day/index.htm"
     return utils.get_ranks(url, SELECTORS)
 
 
-def week(day_time=None):
+def week():
     """Get latest weekly ranks."""
-    base_url = "https://www.melon.com/chart/week/index.htm"
-    url = utils.append_day_time(base_url, day_time)
+    url = "https://www.melon.com/chart/week/index.htm"
     return utils.get_ranks(url, SELECTORS)
 
 
-def month(day_time=None):
+def month():
     """Get latest monthly ranks."""
-    base_url = "https://www.melon.com/chart/month/index.htm"
-    url = utils.append_day_time(base_url, day_time)
+    url = "https://www.melon.com/chart/month/index.htm"
     return utils.get_ranks(url, SELECTORS)
