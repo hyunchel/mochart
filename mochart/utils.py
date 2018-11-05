@@ -17,7 +17,7 @@ def get_html_document(url):
     return resp.text
 
 
-def parse_html_document(html_doc, selectors):
+def parse_html_document(html_doc, selectors, parser):
     """Select items in HTML document."""
     soup = BeautifulSoup(html_doc, "html.parser")
     table = soup.table
@@ -25,7 +25,8 @@ def parse_html_document(html_doc, selectors):
     # These are in order.
     items = OrderedDict()
     for key, selector in selectors.items():
-        items[key] = [link.text for link in table.select(selector)]
+        values = parser(table, selector)
+        items[key] = values
 
     keys = items.keys()
     return [
@@ -34,11 +35,12 @@ def parse_html_document(html_doc, selectors):
     ]
 
 
-def get_ranks(url, selectors):
+def get_ranks(url, selectors, parser):
     """Prase ranks from with URL and selectors."""
     return parse_html_document(
         get_html_document(url),
         selectors,
+        parser,
     )
 
 
