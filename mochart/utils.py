@@ -52,10 +52,10 @@ def localize_time(day_time):
     return day_time.astimezone(seoul)
 
 
-def append_day_time(url, day_time):
+def append_date_string(url, day_time, date_key=None):
     """Add date string to the URL."""
-    if day_time is None:
-        day_time = datetime.now()
     seoul_dt = localize_time(day_time)
     dt_str = seoul_dt.strftime('%Y%m%d%H')
-    return f"{url}?dayTime={dt_str}"
+    if date_key:
+        return f"{url}?{date_key}={dt_str}"
+    return f"{url}/{dt_str}"
