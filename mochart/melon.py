@@ -37,7 +37,7 @@ def trend(day_time=None):
     NOTE: Historical value refreshes daily.
     """
     base_url = "https://www.melon.com/chart/rise/index.htm"
-    url = utils.append_date_string(base_url, day_time, date_key="dayTime")
+    url = utils.append_date_string(base_url, day_time, date_key="dayTime", date_format="%Y%m%d%H")
     return utils.get_ranks(url, SELECTORS, parser)
 
 

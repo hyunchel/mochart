@@ -1,6 +1,6 @@
 """Utility functions shared by all providers."""
 from collections import OrderedDict
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pytz
 import requests
@@ -52,10 +52,18 @@ def localize_time(day_time):
     return day_time.astimezone(seoul)
 
 
-def append_date_string(url, day_time, date_key=None):
+def append_date_string(url, day_time, date_key=None, date_format=None):
     """Add date string to the URL."""
     seoul_dt = localize_time(day_time)
-    dt_str = seoul_dt.strftime('%Y%m%d%H')
+    dt_str = seoul_dt.strftime(date_format)
     if date_key:
         return f"{url}?{date_key}={dt_str}"
     return f"{url}/{dt_str}"
+
+
+def get_week_dates(day_time):
+    """Return the beginning and end of the week which given time falls to."""
+    seoul_dt = localize_time(day_time)
+    beg = seoul_dt - timedelta(days=seoul_dt.weekday())
+    end = beg + timedelta(days=6)
+    return beg, end
