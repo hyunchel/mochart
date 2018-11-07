@@ -67,3 +67,13 @@ def get_week_dates(day_time):
     beg = seoul_dt - timedelta(days=seoul_dt.weekday())
     end = beg + timedelta(days=6)
     return beg, end
+
+
+def get_weeks_in(day_time, start_zero=False, start_sunday=False):
+    """Return the number of weeks into given month."""
+    dt = localize_time(day_time)
+    week_format = "%U" if start_sunday else "%W"
+    addition = 0 if start_zero else 1
+    current_week = int(dt.strftime(week_format))
+    beginning_week = int(datetime(dt.year, dt.month, 1).strftime(week_format))
+    return current_week - beginning_week + addition
