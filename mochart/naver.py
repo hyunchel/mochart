@@ -7,24 +7,31 @@ SELECTORS = {
 }
 
 
-def parser(table, selector):
+def parser(rows):
     """Parse texts accordingly from Naver table."""
-    values = []
-    for row in table.select(selector):
-        values.append(row.text.strip())
-    return values
+
+    def group_multiples(rows):
+        return ", ".join([link.text.strip() for link in rows])
+
+    ranks = []
+    for row in rows[2:]:
+        rank = {}
+        rank["title"] = group_multiples(row.select("td.name > a._title > span"))
+        rank["artist"] = group_multiples(row.select("td._artist > a"))
+        ranks.append(rank)
+    return ranks
 
 
 def realtime(day_time=None):
     """Return realtime rankings."""
     url = "https://music.naver.com/listen/top100.nhn?domain=TOTAL&duration=1h"
-    return utils.get_ranks(url, SELECTORS, parser)
+    return utils.get_ranks(url, "tr", parser)
 
 
 def day(day_time=None):
     """Return rankings for the day."""
     url = "https://music.naver.com/listen/top100.nhn?domain=TOTAL&duration=1d"
-    return utils.get_ranks(url, SELECTORS, parser)
+    return utils.get_ranks(url, "tr", parser)
 
 
 def week(day_time=None):
@@ -42,7 +49,7 @@ def week(day_time=None):
 
         url = f"{base_url}&year={year}&month={month}&week={week}"
 
-    return utils.get_ranks(url, SELECTORS, parser)
+    return utils.get_ranks(url, "tr", parser)
 
 
 def month(day_time=None):
@@ -59,4 +66,4 @@ def month(day_time=None):
 
         url = f"{base_url}&year={year}&month={month}&week={week}"
 
-    return utils.get_ranks(url, SELECTORS, parser)
+    return utils.get_ranks(url, "tr", parser)

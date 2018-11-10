@@ -2,21 +2,33 @@
 from mochart import utils
 
 
-SELECTORS = {
-    "title": "div.ellipsis.rank01",
-    "artist": "div.ellipsis.rank02",
-    "album": "div.ellipsis.rank03",
-}
-
-
-def parser(table, selector):
+def parser(rows):
     """Parse texts accordingly from Melon table."""
-    values = []
-    for row in table.select(selector):
-        texts = [link.text for link in row.select("a")]
-        texts = texts[len(texts) // 2:]
-        values.append(", ".join(texts))
-    return values
+    def remove_dups(rows):
+        return rows[len(rows) // 2:]
+    def get_texts(rows):
+        return map(lambda row: row.text, rows)
+    def group_multiples(rows):
+        return ", ".join(rows)
+    def parse(selector):
+        return map(
+            (
+                lambda row:
+                    group_multiples(
+                        get_texts(
+                            remove_dups(
+                                row.select(selector))))
+            ),
+            rows[1:]
+        )
+    return map(
+        lambda t: {"title": t[0], "artist": t[1], "album": t[2]},
+        zip(
+            parse("div.ellipsis.rank01 a"),
+            parse("div.ellipsis.rank02 a"),
+            parse("div.ellipsis.rank03 a"),
+        )
+    )
 
 
 def realtime():
@@ -28,7 +40,7 @@ def realtime():
     """
     # Do not need any day time.
     url = "https://www.melon.com/chart/index.htm"
-    return utils.get_ranks(url, SELECTORS, parser)
+    return utils.get_ranks(url, "tr", parser)
 
 
 def trend(day_time=None):
@@ -38,22 +50,22 @@ def trend(day_time=None):
     """
     base_url = "https://www.melon.com/chart/rise/index.htm"
     url = utils.append_date_string(base_url, day_time, date_key="dayTime", date_format="%Y%m%d%H")
-    return utils.get_ranks(url, SELECTORS, parser)
+    return utils.get_ranks(url, "tr", parser)
 
 
 def day():
     """Get latest daily ranks."""
     url = "https://www.melon.com/chart/day/index.htm"
-    return utils.get_ranks(url, SELECTORS, parser)
+    return utils.get_ranks(url, "tr", parser)
 
 
 def week():
     """Get latest weekly ranks."""
     url = "https://www.melon.com/chart/week/index.htm"
-    return utils.get_ranks(url, SELECTORS, parser)
+    return utils.get_ranks(url, "tr", parser)
 
 
 def month():
     """Get latest monthly ranks."""
     url = "https://www.melon.com/chart/month/index.htm"
-    return utils.get_ranks(url, SELECTORS, parser)
+    return utils.get_ranks(url, "tr", parser)

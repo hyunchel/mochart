@@ -17,29 +17,17 @@ def get_html_document(url):
     return resp.text
 
 
-def parse_html_document(html_doc, selectors, parser):
-    """Select items in HTML document."""
+def apply_parser(html_doc, selector, parser):
+    """Parse items in HTML document."""
     soup = BeautifulSoup(html_doc, "html.parser")
-    table = soup.table
-
-    # These are in order.
-    items = OrderedDict()
-    for key, selector in selectors.items():
-        values = parser(table, selector)
-        items[key] = values
-
-    keys = items.keys()
-    return [
-        {key: value for key, value in zip(keys, values)}
-        for values in zip(*items.values())
-    ]
+    return parser(soup.select(selector))
 
 
-def get_ranks(url, selectors, parser):
+def get_ranks(url, selector, parser):
     """Prase ranks from with URL and selectors."""
-    return parse_html_document(
+    return apply_parser(
         get_html_document(url),
-        selectors,
+        selector,
         parser,
     )
 
@@ -69,11 +57,24 @@ def get_week_dates(day_time):
     return beg, end
 
 
-def get_weeks_in(day_time, start_zero=False, start_sunday=False):
-    """Return the number of weeks into given month."""
+def get_weeks(day_time, start_sunday=False):
     dt = localize_time(day_time)
     week_format = "%U" if start_sunday else "%W"
+    return dt.strftime(week_format)
+
+def get_weeks_in(day_time, start_zero=False, start_sunday=False):
+    """Return the number of weeks into given month."""
+    current_week = int(get_weeks(day_time))
+    beginning_week = int(get_weeks(datetime(dt.year, dt.month, 1)))
     addition = 0 if start_zero else 1
-    current_week = int(dt.strftime(week_format))
-    beginning_week = int(datetime(dt.year, dt.month, 1).strftime(week_format))
     return current_week - beginning_week + addition
+
+
+def get_months(day_time):
+    dt = localize_time(day_time)
+    return dt.strftime("%m")
+
+
+def get_years(day_time):
+    dt = localize_time(day_time)
+    return dt.strftime("%Y")
