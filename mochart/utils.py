@@ -40,13 +40,16 @@ def localize_time(day_time):
     return day_time.astimezone(seoul)
 
 
-def append_date_string(url, day_time, date_key=None, date_format=None):
+def append_date_string(url, day_time, date_key=None, date_format=None, trailing_slash=False):
     """Add date string to the URL."""
     seoul_dt = localize_time(day_time)
     dt_str = seoul_dt.strftime(date_format)
+    slash = ""
+    if trailing_slash:
+        slash = "/"
     if date_key:
-        return f"{url}?{date_key}={dt_str}"
-    return f"{url}/{dt_str}"
+        return f"{url}?{date_key}={dt_str}{slash}"
+    return f"{url}/{dt_str}{slash}"
 
 
 def get_week_dates(day_time):
@@ -61,6 +64,7 @@ def get_weeks(day_time, start_sunday=False):
     dt = localize_time(day_time)
     week_format = "%U" if start_sunday else "%W"
     return dt.strftime(week_format)
+
 
 def get_weeks_in(day_time, start_zero=False, start_sunday=False):
     """Return the number of weeks into given month."""
