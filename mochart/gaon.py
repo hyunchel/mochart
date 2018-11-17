@@ -3,7 +3,6 @@ from mochart import utils
 
 def parser(rows):
     """Parse texts accordingly from Gaon table."""
-    values = []
     titles = map(lambda t: t[1].text,
                  filter(lambda x: x[0] % 2 == 0, enumerate(rows)))
     artists = map(lambda t: t[1].text.split("|")[0],

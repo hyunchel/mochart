@@ -35,7 +35,6 @@ def day(day_time=None):
 def week(day_time=None):
     base_url = "http://www.mnet.com/chart/TOP100"
     beg, end = utils.get_week_dates(day_time)
-    # Should this be added to "append_date_string"?
     date_format = "%Y%m%d"
     url = f"{base_url}/{beg.strftime(date_format)}-{end.strftime(date_format)}"
     return utils.get_ranks(
