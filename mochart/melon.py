@@ -21,14 +21,14 @@ def parser(rows):
             ),
             rows[1:]
         )
-    return map(
-        lambda t: {"title": t[0], "artist": t[1], "album": t[2]},
-        zip(
+    return [
+        {"title": t[0], "artist": t[1], "album": t[2]}
+        for t in zip(
             parse("div.ellipsis.rank01 a"),
             parse("div.ellipsis.rank02 a"),
             parse("div.ellipsis.rank03 a"),
         )
-    )
+    ]
 
 
 def realtime():
