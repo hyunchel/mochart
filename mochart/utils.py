@@ -133,6 +133,18 @@ def get_years(day_time):
     return dt.strftime("%Y")
 
 
+def group_multiples(links):
+    """Join links by comma if more than one.
+
+    >>> from collections import namedtuple
+    >>> Link = namedtuple("Link", ["text"])
+    >>> artists = [Link("IU"), Link("Sungha Jung")]
+    >>> group_multiples(artists)
+    'IU, Sungha Jung'
+    """
+    return ", ".join([link.text.strip() for link in links])
+
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()

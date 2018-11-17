@@ -4,14 +4,10 @@ from mochart import utils
 def parser(rows):
     """Parse texts accordingly from Oricon table."""
     ranks = []
-
-    def group_by_multiples(rows):
-        return ", ".join([link.text for link in rows])
-
     for row in rows:
         rank = {}
-        rank["title"] = group_by_multiples(row.select(".title"))
-        rank["artist"] = group_by_multiples(row.select(".name"))
+        rank["title"] = utils.group_multiples(row.select(".title"))
+        rank["artist"] = utils.group_multiples(row.select(".name"))
         ranks.append(rank)
 
     return ranks

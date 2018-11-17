@@ -4,16 +4,12 @@ from mochart import utils
 def parser(rows):
     """Parse texts accordingly from Mnet table."""
     ranks = []
-
-    def group_by_multiples(rows):
-        return ", ".join([link.text for link in rows])
-
     for row in rows:
         rank = {}
-        rank["title"] = group_by_multiples(row.select("a.MMLI_Song"))
-        rank["album"] = group_by_multiples(row.select("a.MMLIInfo_Album"))
+        rank["title"] = utils.group_multiples(row.select("a.MMLI_Song"))
+        rank["album"] = utils.group_multiples(row.select("a.MMLIInfo_Album"))
         # Requires a bit of tricks due to multiple artists.
-        rank["artist"] = group_by_multiples(row.select("a.MMLIInfo_Artist"))
+        rank["artist"] = utils.group_multiples(row.select("a.MMLIInfo_Artist"))
         ranks.append(rank)
     return ranks
 

@@ -8,16 +8,12 @@ SELECTORS = {
 
 def parser(rows):
     """Parse texts accordingly from Naver table."""
-
-    def group_multiples(rows):
-        return ", ".join([link.text.strip() for link in rows])
-
     ranks = []
     for row in rows[2:]:
         rank = {}
-        rank["title"] = group_multiples(
+        rank["title"] = utils.group_multiples(
             row.select("td.name > a._title > span"))
-        rank["artist"] = group_multiples(row.select("td._artist > a"))
+        rank["artist"] = utils.group_multiples(row.select("td._artist > a"))
         ranks.append(rank)
     return ranks
 
