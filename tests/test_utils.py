@@ -1,19 +1,17 @@
 """Unit tests for utility functions."""
 from datetime import datetime
+from unittest.mock import MagicMock
 
-from mochart import utils
+import mochart.utils as utils
 
 
-def test_none_day_time():
-    """Assert None value for day_time parameter."""
+def test_get_html_document(monkeypatch):
+    """Assert GET request is sent with URL and headers."""
+    mock_requests = MagicMock()
+    monkeypatch.setattr(utils, "requests", mock_requests)
+
     url = "some URL string"
-    day_time = None
-    assert "dayTime" in utils.append_day_time(url, day_time)
+    utils.get_html_document(url)
 
-
-def test_day_time_present():
-    """Assert a value for day_time parameter."""
-    url = "some URL string"
-    day_time = datetime.now()
-    date_str = day_time.strftime("%Y%m%d%H")
-    assert date_str in utils.append_day_time(url, day_time)
+    assert url in mock_requests.get.call_args[0]
+    assert "headers" in mock_requests.get.call_args[1]

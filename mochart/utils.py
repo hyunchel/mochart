@@ -94,7 +94,7 @@ def get_weeks_in(day_time, start_zero=False, start_sunday=False):
 
 
 def get_weeks(day_time, start_sunday=False):
-    """Return the number of weeks into given month.
+    """Return the number of weeks into given month in string.
     
     >>> dt = datetime(2018, 1, 1)
     >>> get_weeks(dt)
