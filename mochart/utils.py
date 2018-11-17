@@ -1,5 +1,4 @@
 """Utility functions shared by all providers."""
-from collections import OrderedDict
 from datetime import datetime, timedelta
 
 import pytz
@@ -11,9 +10,9 @@ def get_html_document(url):
     """Get HTML document of given URL."""
     headers = {
         "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36", # noqa
         "Accept":
-        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8", # noqa
     }
     resp = requests.get(url, headers=headers)
     return resp.text
@@ -36,9 +35,9 @@ def get_ranks(url, selector, parser):
 
 def localize_time(day_time):
     """Return Seoul time.
-    
+
     >>> dt = datetime(2018, 11, 17)
-    >>> local_dt = localize_time(dt) 
+    >>> local_dt = localize_time(dt)
     >>> local_dt.tzname()
     'KST'
     """
@@ -54,7 +53,7 @@ def append_date_string(url,
                        date_format="%Y-%m-%d",
                        trailing_slash=False):
     """Add date string to the URL.
-    
+
     >>> url = "https://mochart.com"
     >>> dt = datetime(2018, 11, 17)
     >>> append_date_string(url, dt)
@@ -72,7 +71,7 @@ def append_date_string(url,
 
 def get_week_dates(day_time):
     """Return the beginning and end of the week which given time falls to.
-    
+
     >>> dt = datetime(2018, 11, 17)
     >>> beg, end = get_week_dates(dt)
     >>> beg.strftime("%Y-%m-%d")
@@ -88,7 +87,7 @@ def get_week_dates(day_time):
 
 def get_weeks_in(day_time, start_zero=False, start_sunday=False):
     """Return the number of weeks into given month.
-    
+
     >>> dt = datetime(2018, 1, 1)
     >>> get_weeks_in(dt)
     1
@@ -101,7 +100,7 @@ def get_weeks_in(day_time, start_zero=False, start_sunday=False):
 
 def get_weeks(day_time, start_sunday=False):
     """Return the number of weeks into given month in string.
-    
+
     >>> dt = datetime(2018, 1, 1)
     >>> get_weeks(dt)
     '01'
@@ -113,7 +112,7 @@ def get_weeks(day_time, start_sunday=False):
 
 def get_months(day_time):
     """Return month in string.
-    
+
     >>> dt = datetime(2018, 1, 1)
     >>> get_months(dt)
     '01'
@@ -124,7 +123,7 @@ def get_months(day_time):
 
 def get_years(day_time):
     """Return year in string.
-    
+
     >>> dt = datetime(2018, 1, 1)
     >>> get_years(dt)
     '2018'

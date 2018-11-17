@@ -39,19 +39,19 @@ def parser(rows):
 
 def realtime():
     """Get latest real-time ranks.
-    
+
     NOTE: According to Melon's public announcement,
           "real-time" work will pause for 6 hours every day from 1AM - 7AM.
-          Reference: https://www.melon.com/customer/announce/infomAnnounce.htm?seq=668
+          Reference:
+          https://www.melon.com/customer/announce/infomAnnounce.htm?seq=668
     """
-    # Do not need any day time.
     url = "https://www.melon.com/chart/index.htm"
     return utils.get_ranks(url, "tr", parser)
 
 
 def trend(day_time=None):
     """Get latest trending ranks.
-    
+
     NOTE: Historical value refreshes daily.
     """
     base_url = "https://www.melon.com/chart/rise/index.htm"

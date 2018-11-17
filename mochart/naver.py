@@ -1,10 +1,5 @@
 from mochart import utils
 
-SELECTORS = {
-    "title": "td.name > a._title > span",
-    "artist": "td._artist > a",
-}
-
 
 def parser(rows):
     """Parse texts accordingly from Naver table."""

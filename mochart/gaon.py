@@ -17,7 +17,7 @@ def parser(rows):
 
 
 def week(day_time=None):
-    base_url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=ALL&termGbn=week"
+    base_url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=ALL&termGbn=week" # noqa
     weeks = utils.get_weeks(day_time)
     years = utils.get_years(day_time)
     url = f"{base_url}&targetTime={weeks}&hitYear={years}"
@@ -25,7 +25,7 @@ def week(day_time=None):
 
 
 def month(day_time=None):
-    base_url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=ALL&termGbn=month"
+    base_url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=ALL&termGbn=month" # noqa
     months = utils.get_months(day_time)
     years = utils.get_years(day_time)
     url = f"{base_url}&targetTime={months}&hitYear={years}"
@@ -33,7 +33,7 @@ def month(day_time=None):
 
 
 def year(day_time=None):
-    base_url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=ALL&termGbn=year"
+    base_url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=ALL&termGbn=year" # noqa
     years = utils.get_years(day_time)
     url = f"{base_url}&targetTime={years}&hitYear={years}"
     return utils.get_ranks(url, "td.subject [title]", parser)

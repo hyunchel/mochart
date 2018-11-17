@@ -1,1 +1,1 @@
-from . import melon, mnet, naver, gaon, oricon
+from . import melon, mnet, naver, gaon, oricon # noqa

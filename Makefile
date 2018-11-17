@@ -1,7 +1,10 @@
 .PHONY: clean test
 
-lint:
+auto-lint:
 	yapf mochart tests -ri
+
+lint:
+	flake8 mochart tests
 
 test: clean
 	pytest

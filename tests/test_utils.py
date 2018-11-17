@@ -1,5 +1,4 @@
 """Unit tests for utility functions."""
-from datetime import datetime
 from unittest.mock import MagicMock
 
 import mochart.utils as utils
