@@ -4,12 +4,16 @@ from mochart import utils
 
 def parser(rows):
     """Parse texts accordingly from Melon table."""
+
     def remove_dups(rows):
         return rows[len(rows) // 2:]
+
     def get_texts(rows):
         return map(lambda row: row.text, rows)
+
     def group_multiples(rows):
         return ", ".join(rows)
+
     def parse(selector):
         return map(
             (
@@ -21,14 +25,16 @@ def parser(rows):
             ),
             rows[1:]
         )
-    return [
-        {"title": t[0], "artist": t[1], "album": t[2]}
-        for t in zip(
-            parse("div.ellipsis.rank01 a"),
-            parse("div.ellipsis.rank02 a"),
-            parse("div.ellipsis.rank03 a"),
-        )
-    ]
+
+    return [{
+        "title": t[0],
+        "artist": t[1],
+        "album": t[2]
+    } for t in zip(
+        parse("div.ellipsis.rank01 a"),
+        parse("div.ellipsis.rank02 a"),
+        parse("div.ellipsis.rank03 a"),
+    )]
 
 
 def realtime():
@@ -49,7 +55,8 @@ def trend(day_time=None):
     NOTE: Historical value refreshes daily.
     """
     base_url = "https://www.melon.com/chart/rise/index.htm"
-    url = utils.append_date_string(base_url, day_time, date_key="dayTime", date_format="%Y%m%d%H")
+    url = utils.append_date_string(
+        base_url, day_time, date_key="dayTime", date_format="%Y%m%d%H")
     return utils.get_ranks(url, "tr", parser)
 
 

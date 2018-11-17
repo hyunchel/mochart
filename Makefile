@@ -1,5 +1,8 @@
 .PHONY: clean test
 
+lint:
+	yapf mochart tests -ri
+
 test: clean
 	pytest
 	python -m tests.docstrings

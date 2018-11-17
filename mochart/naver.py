@@ -1,6 +1,5 @@
 from mochart import utils
 
-
 SELECTORS = {
     "title": "td.name > a._title > span",
     "artist": "td._artist > a",
@@ -16,7 +15,8 @@ def parser(rows):
     ranks = []
     for row in rows[2:]:
         rank = {}
-        rank["title"] = group_multiples(row.select("td.name > a._title > span"))
+        rank["title"] = group_multiples(
+            row.select("td.name > a._title > span"))
         rank["artist"] = group_multiples(row.select("td._artist > a"))
         ranks.append(rank)
     return ranks

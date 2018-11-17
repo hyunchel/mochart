@@ -4,22 +4,17 @@ from mochart import utils
 def parser(rows):
     """Parse texts accordingly from Gaon table."""
     values = []
-    titles = map(
-        lambda t: t[1].text,
-        filter(lambda x: x[0] % 2 == 0, enumerate(rows))
-    )
-    artists = map(
-        lambda t: t[1].text.split("|")[0],
-        filter(lambda x: x[0] % 2 != 0, enumerate(rows))
-    )
-    albums = map(
-        lambda t: t[1].text.split("|")[1],
-        filter(lambda x: x[0] % 2 != 0, enumerate(rows))
-    )
-    return [
-        {"title": title, "artist": artist, "album": album}
-        for title, artist, album in zip(titles, artists, albums)
-    ]
+    titles = map(lambda t: t[1].text,
+                 filter(lambda x: x[0] % 2 == 0, enumerate(rows)))
+    artists = map(lambda t: t[1].text.split("|")[0],
+                  filter(lambda x: x[0] % 2 != 0, enumerate(rows)))
+    albums = map(lambda t: t[1].text.split("|")[1],
+                 filter(lambda x: x[0] % 2 != 0, enumerate(rows)))
+    return [{
+        "title": title,
+        "artist": artist,
+        "album": album
+    } for title, artist, album in zip(titles, artists, albums)]
 
 
 def week(day_time=None):

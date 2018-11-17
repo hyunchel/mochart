@@ -10,8 +10,10 @@ from bs4 import BeautifulSoup
 def get_html_document(url):
     """Get HTML document of given URL."""
     headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+        "User-Agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36",
+        "Accept":
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
     }
     resp = requests.get(url, headers=headers)
     return resp.text
@@ -46,7 +48,11 @@ def localize_time(day_time):
     return day_time.astimezone(seoul)
 
 
-def append_date_string(url, day_time, date_key=None, date_format="%Y-%m-%d", trailing_slash=False):
+def append_date_string(url,
+                       day_time,
+                       date_key=None,
+                       date_format="%Y-%m-%d",
+                       trailing_slash=False):
     """Add date string to the URL.
     
     >>> url = "https://mochart.com"
