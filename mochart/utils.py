@@ -33,15 +33,27 @@ def get_ranks(url, selector, parser):
 
 
 def localize_time(day_time):
-    """Return Seoul time."""
+    """Return Seoul time.
+    
+    >>> dt = datetime(2018, 11, 17)
+    >>> local_dt = localize_time(dt) 
+    >>> local_dt.tzname()
+    'KST'
+    """
     if day_time is None:
         day_time = datetime.now()
     seoul = pytz.timezone("Asia/Seoul")
     return day_time.astimezone(seoul)
 
 
-def append_date_string(url, day_time, date_key=None, date_format=None, trailing_slash=False):
-    """Add date string to the URL."""
+def append_date_string(url, day_time, date_key=None, date_format="%Y-%m-%d", trailing_slash=False):
+    """Add date string to the URL.
+    
+    >>> url = "https://mochart.com"
+    >>> dt = datetime(2018, 11, 17)
+    >>> append_date_string(url, dt)
+    'https://mochart.com/2018-11-17'
+    """
     seoul_dt = localize_time(day_time)
     dt_str = seoul_dt.strftime(date_format)
     slash = ""
@@ -53,32 +65,68 @@ def append_date_string(url, day_time, date_key=None, date_format=None, trailing_
 
 
 def get_week_dates(day_time):
-    """Return the beginning and end of the week which given time falls to."""
+    """Return the beginning and end of the week which given time falls to.
+    
+    >>> dt = datetime(2018, 11, 17)
+    >>> beg, end = get_week_dates(dt)
+    >>> beg.strftime("%Y-%m-%d")
+    '2018-11-12'
+    >>> end.strftime("%Y-%m-%d")
+    '2018-11-18'
+    """
     seoul_dt = localize_time(day_time)
     beg = seoul_dt - timedelta(days=seoul_dt.weekday())
     end = beg + timedelta(days=6)
     return beg, end
 
 
+def get_weeks_in(day_time, start_zero=False, start_sunday=False):
+    """Return the number of weeks into given month.
+    
+    >>> dt = datetime(2018, 1, 1)
+    >>> get_weeks_in(dt)
+    1
+    """
+    current_week = int(get_weeks(day_time))
+    beginning_week = int(get_weeks(datetime(day_time.year, day_time.month, 1)))
+    addition = 0 if start_zero else 1
+    return current_week - beginning_week + addition
+
+
 def get_weeks(day_time, start_sunday=False):
+    """Return the number of weeks into given month.
+    
+    >>> dt = datetime(2018, 1, 1)
+    >>> get_weeks(dt)
+    '01'
+    """
     dt = localize_time(day_time)
     week_format = "%U" if start_sunday else "%W"
     return dt.strftime(week_format)
 
 
-def get_weeks_in(day_time, start_zero=False, start_sunday=False):
-    """Return the number of weeks into given month."""
-    current_week = int(get_weeks(day_time))
-    beginning_week = int(get_weeks(datetime(dt.year, dt.month, 1)))
-    addition = 0 if start_zero else 1
-    return current_week - beginning_week + addition
-
-
 def get_months(day_time):
+    """Return month in string.
+    
+    >>> dt = datetime(2018, 1, 1)
+    >>> get_months(dt)
+    '01'
+    """
     dt = localize_time(day_time)
     return dt.strftime("%m")
 
 
 def get_years(day_time):
+    """Return year in string.
+    
+    >>> dt = datetime(2018, 1, 1)
+    >>> get_years(dt)
+    '2018'
+    """
     dt = localize_time(day_time)
     return dt.strftime("%Y")
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
