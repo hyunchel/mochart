@@ -33,18 +33,21 @@ def get_ranks(url, selector, parser):
     )
 
 
-def localize_time(day_time):
-    """Return Seoul time.
+def localize_time(day_time, timezone="UTC"):
+    """Return local time, defaulting to UTC.
 
     >>> dt = datetime(2018, 11, 17)
     >>> local_dt = localize_time(dt)
+    >>> local_dt.tzname()
+    'UTC'
+    >>> local_dt = localize_time(dt, "Asia/Seoul")
     >>> local_dt.tzname()
     'KST'
     """
     if day_time is None:
         day_time = datetime.now()
-    seoul = pytz.timezone("Asia/Seoul")
-    return day_time.astimezone(seoul)
+    local = pytz.timezone(timezone)
+    return day_time.astimezone(local)
 
 
 def append_date_string(url,
@@ -59,8 +62,7 @@ def append_date_string(url,
     >>> append_date_string(url, dt)
     'https://mochart.com/2018-11-17'
     """
-    seoul_dt = localize_time(day_time)
-    dt_str = seoul_dt.strftime(date_format)
+    dt_str = day_time.strftime(date_format)
     slash = ""
     if trailing_slash:
         slash = "/"
@@ -79,8 +81,7 @@ def get_week_dates(day_time):
     >>> end.strftime("%Y-%m-%d")
     '2018-11-18'
     """
-    seoul_dt = localize_time(day_time)
-    beg = seoul_dt - timedelta(days=seoul_dt.weekday())
+    beg = day_time - timedelta(days=day_time.weekday())
     end = beg + timedelta(days=6)
     return beg, end
 

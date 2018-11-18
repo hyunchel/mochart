@@ -2,6 +2,7 @@ import pytest
 
 from mochart import (melon, mnet, naver, gaon, oricon)
 
+
 PROVIDERS = [melon, mnet, naver, gaon, oricon]
 
 

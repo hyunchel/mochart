@@ -8,20 +8,13 @@ def parser(rows):
     def remove_dups(rows):
         return rows[len(rows) // 2:]
 
-    def get_texts(rows):
-        return map(lambda row: row.text, rows)
-
-    def group_multiples(rows):
-        return ", ".join(rows)
-
     def parse(selector):
         return map(
             (
                 lambda row:
-                    group_multiples(
-                        get_texts(
-                            remove_dups(
-                                row.select(selector))))
+                    utils.group_multiples(
+                        remove_dups(
+                            row.select(selector)))
             ),
             rows[1:]
         )
@@ -55,8 +48,9 @@ def trend(day_time=None):
     NOTE: Historical value refreshes daily.
     """
     base_url = "https://www.melon.com/chart/rise/index.htm"
+    local_dt = utils.localize_time(day_time, "Asia/Seoul")
     url = utils.append_date_string(
-        base_url, day_time, date_key="dayTime", date_format="%Y%m%d%H")
+        base_url, local_dt, date_key="dayTime", date_format="%Y%m%d%H")
     return utils.get_ranks(url, "tr", parser)
 
 

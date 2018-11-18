@@ -32,11 +32,11 @@ def week(day_time=None):
     if day_time is not None:
         base_url = "https://music.naver.com/listen/history/index.nhn?type=TOTAL"
 
-        dt = utils.localize_time(day_time)
-        year = dt.strftime("%Y")
-        month = dt.strftime("%m")
+        local_dt = utils.localize_time(day_time, "Asia/Seoul")
+        year = local_dt.strftime("%Y")
+        month = local_dt.strftime("%m")
         # 0 == all, so the first week is 1.
-        week = utils.get_weeks_in(dt)
+        week = utils.get_weeks_in(local_dt)
 
         url = f"{base_url}&year={year}&month={month}&week={week}"
 
@@ -49,9 +49,9 @@ def month(day_time=None):
     if day_time is not None:
         base_url = "https://music.naver.com/listen/history/index.nhn?type=TOTAL"
 
-        dt = utils.localize_time(day_time)
-        year = dt.strftime("%Y")
-        month = dt.strftime("%m")
+        local_dt = utils.localize_time(day_time, "Asia/Seoul")
+        year = local_dt.strftime("%Y")
+        month = local_dt.strftime("%m")
         # 0 == all, so the first week is 1.
         week = 0
 

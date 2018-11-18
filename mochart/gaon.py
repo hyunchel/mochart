@@ -18,22 +18,25 @@ def parser(rows):
 
 def week(day_time=None):
     base_url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=ALL&termGbn=week" # noqa
-    weeks = utils.get_weeks(day_time)
-    years = utils.get_years(day_time)
+    local_dt = utils.localize_time(day_time, "Asia/Seoul")
+    weeks = utils.get_weeks(local_dt)
+    years = utils.get_years(local_dt)
     url = f"{base_url}&targetTime={weeks}&hitYear={years}"
     return utils.get_ranks(url, "td.subject [title]", parser)
 
 
 def month(day_time=None):
     base_url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=ALL&termGbn=month" # noqa
-    months = utils.get_months(day_time)
-    years = utils.get_years(day_time)
+    local_dt = utils.localize_time(day_time, "Asia/Seoul")
+    months = utils.get_months(local_dt)
+    years = utils.get_years(local_dt)
     url = f"{base_url}&targetTime={months}&hitYear={years}"
     return utils.get_ranks(url, "td.subject [title]", parser)
 
 
 def year(day_time=None):
     base_url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=ALL&termGbn=year" # noqa
-    years = utils.get_years(day_time)
+    local_dt = utils.localize_time(day_time, "Asia/Seoul")
+    years = utils.get_years(local-dt)
     url = f"{base_url}&targetTime={years}&hitYear={years}"
     return utils.get_ranks(url, "td.subject [title]", parser)
