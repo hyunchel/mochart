@@ -30,7 +30,7 @@ jobs:
           name: Run Tests
           command: |
             . venv/bin/activate
-            make test
+            make ci-test
 
       - store_artifacts:
           path: test-reports
