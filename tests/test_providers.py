@@ -22,9 +22,9 @@ def test_sanity_checks():
             assert len(provider.week(two_days_ago)) > 5
 
 
-def test_gaon_parser(monkeypatch, gaon_realtime):
+def test_gaon_parser(monkeypatch, gaon_week):
     """Assert parser extracts some ranks."""
-    mock_get_html_document = MagicMock(return_value=gaon_realtime)
+    mock_get_html_document = MagicMock(return_value=gaon_week)
     monkeypatch.setattr(gaon.utils, "get_html_document", mock_get_html_document)
     ranks = gaon.week()
     assert len(ranks) > 0
@@ -46,17 +46,17 @@ def test_mnet_parser(monkeypatch, mnet_realtime):
     assert len(ranks) > 0
 
 
-def test_naver_parser(monkeypatch, naver_realtime):
+def test_naver_parser(monkeypatch, naver_day):
     """Assert parser extracts some ranks."""
-    mock_get_html_document = MagicMock(return_value=naver_realtime)
+    mock_get_html_document = MagicMock(return_value=naver_day)
     monkeypatch.setattr(naver.utils, "get_html_document", mock_get_html_document)
     ranks = naver.day()
     assert len(ranks) > 0
 
 
-def test_oricon_parser(monkeypatch, oricon_realtime):
+def test_oricon_parser(monkeypatch, oricon_day):
     """Assert parser extracts some ranks."""
-    mock_get_html_document = MagicMock(return_value=oricon_realtime)
+    mock_get_html_document = MagicMock(return_value=oricon_day)
     monkeypatch.setattr(oricon.utils, "get_html_document", mock_get_html_document)
     ranks = oricon.day()
     assert len(ranks) > 0

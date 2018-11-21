@@ -20,15 +20,15 @@ def mnet_realtime():
 
 
 @pytest.fixture
-def gaon_realtime():
+def gaon_week():
     return get_html_fixture("gaon_week")
 
 
 @pytest.fixture
-def naver_realtime():
+def naver_day():
     return get_html_fixture("naver_day")
 
 
 @pytest.fixture
-def oricon_realtime():
+def oricon_day():
     return get_html_fixture("oricon_day")
