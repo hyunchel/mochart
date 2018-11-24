@@ -18,3 +18,9 @@ clean:
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
+
+test-release:
+	rm -rf dist/
+	python setup.py sdist
+	twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+	rm -rf dist/

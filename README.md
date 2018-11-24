@@ -59,11 +59,7 @@ All functions in a provider(e.g. Melon) will return Python List that contains mu
 
 Generally, a rank contains title, aritst, and album in string format as seen above.
 
-> If incorrect time is given to any function, it could return either an empty array, or ranks of the closest date.
-
-> If no datetime object is provided as an argument, the current time will be used in query.
-
-> Not all providers support the these functions.
+*Not all providers support the these functions.*
 
 #### realtime
 Return the most current ranks at the time of query.
@@ -81,8 +77,16 @@ Return ranks given week.
 Return ranks given month.
 
 #### year
-Return ranks given year. 
+Return ranks given year.
 
+
+## Datetime
+
+Given datetime object will be converted into a local datetime for the provider. For example A datetime given to `melon.day(today)`, the argument `today` will be converted to  `Asia/Seoul` timezone before the query.
+
+Note that if incorrect time is given to any function, it could return either an empty array or ranks of the closest date.
+
+Also, if no datetime object is provided as an argument, the current time will be used in the query.
 
 ## Contribution
 
