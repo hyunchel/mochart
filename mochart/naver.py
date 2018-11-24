@@ -1,6 +1,11 @@
 from mochart import utils
 
 
+BASE_URL = "https://music.naver.com/listen/top100.nhn?domain=TOTAL"
+SELECTOR = "tr"
+TIMEZONE = "Asia/Seoul"
+
+
 def parser(rows):
     """Parse texts accordingly from Naver table."""
     ranks = []
@@ -15,24 +20,24 @@ def parser(rows):
 
 def realtime(day_time=None):
     """Return realtime rankings."""
-    url = "https://music.naver.com/listen/top100.nhn?domain=TOTAL&duration=1h"
-    return utils.get_ranks(url, "tr", parser)
+    url = f"{BASE_URL}&duration=1h"
+    return utils.get_ranks(url, SELECTOR, parser)
 
 
 def day(day_time=None):
     """Return rankings for the day."""
-    url = "https://music.naver.com/listen/top100.nhn?domain=TOTAL&duration=1d"
-    return utils.get_ranks(url, "tr", parser)
+    url = f"{BASE_URL}&duration=1d"
+    return utils.get_ranks(url, SELECTOR, parser)
 
 
 def week(day_time=None):
     """Return rankings for given week."""
-    url = "https://music.naver.com/listen/top100.nhn?domain=TOTAL&duration=7d"
+    url = f"{BASE_URL}&duration=7d"
 
     if day_time is not None:
         base_url = "https://music.naver.com/listen/history/index.nhn?type=TOTAL"
 
-        local_dt = utils.localize_time(day_time, "Asia/Seoul")
+        local_dt = utils.localize_time(day_time, TIMEZONE)
         year = local_dt.strftime("%Y")
         month = local_dt.strftime("%m")
         # 0 == all, so the first week is 1.
@@ -40,16 +45,16 @@ def week(day_time=None):
 
         url = f"{base_url}&year={year}&month={month}&week={week}"
 
-    return utils.get_ranks(url, "tr", parser)
+    return utils.get_ranks(url, SELECTOR, parser)
 
 
 def month(day_time=None):
     """Return rankings for given month."""
-    url = "https://music.naver.com/listen/top100.nhn?domain=TOTAL&duration=28d"
+    url = f"{BASE_URL}&duration=28d"
     if day_time is not None:
         base_url = "https://music.naver.com/listen/history/index.nhn?type=TOTAL"
 
-        local_dt = utils.localize_time(day_time, "Asia/Seoul")
+        local_dt = utils.localize_time(day_time, TIMEZONE)
         year = local_dt.strftime("%Y")
         month = local_dt.strftime("%m")
         # 0 == all, so the first week is 1.
@@ -57,4 +62,4 @@ def month(day_time=None):
 
         url = f"{base_url}&year={year}&month={month}&week={week}"
 
-    return utils.get_ranks(url, "tr", parser)
+    return utils.get_ranks(url, SELECTOR, parser)

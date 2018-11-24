@@ -1,6 +1,11 @@
 from mochart import utils
 
 
+BASE_URL = "http://www.mnet.com/chart/TOP100"
+SELECTOR = "td.MMLItemTitle > div > div.MMLITitle_Box.info"
+TIMEZONE = "Asia/Seoul"
+
+
 def parser(rows):
     """Parse texts accordingly from Mnet table."""
     ranks = []
@@ -15,42 +20,37 @@ def parser(rows):
 
 
 def realtime(day_time=None):
-    base_url = "http://www.mnet.com/chart/TOP100"
-    local_dt = utils.localize_time(day_time, "Asia/Seoul")
-    url = utils.append_date_string(base_url, local_dt, date_format="%Y%m%d%H")
+    local_dt = utils.localize_time(day_time, TIMEZONE)
+    url = utils.append_date_string(BASE_URL, local_dt, date_format="%Y%m%d%H")
     return utils.get_ranks(
-        url, "td.MMLItemTitle > div > div.MMLITitle_Box.info", parser)
+        url, SELECTOR, parser)
 
 
 def day(day_time=None):
-    base_url = "http://www.mnet.com/chart/TOP100"
-    local_dt = utils.localize_time(day_time, "Asia/Seoul")
-    url = utils.append_date_string(base_url, local_dt, date_format="%Y%m%d")
+    local_dt = utils.localize_time(day_time, TIMEZONE)
+    url = utils.append_date_string(BASE_URL, local_dt, date_format="%Y%m%d")
     return utils.get_ranks(
-        url, "td.MMLItemTitle > div > div.MMLITitle_Box.info", parser)
+        url, SELECTOR, parser)
 
 
 def week(day_time=None):
-    base_url = "http://www.mnet.com/chart/TOP100"
-    local_dt = utils.localize_time(day_time, "Asia/Seoul")
+    local_dt = utils.localize_time(day_time, TIMEZONE)
     beg, end = utils.get_week_dates(local_dt)
     date_format = "%Y%m%d"
-    url = f"{base_url}/{beg.strftime(date_format)}-{end.strftime(date_format)}"
+    url = f"{BASE_URL}/{beg.strftime(date_format)}-{end.strftime(date_format)}"
     return utils.get_ranks(
-        url, "td.MMLItemTitle > div > div.MMLITitle_Box.info", parser)
+        url, SELECTOR, parser)
 
 
 def month(day_time=None):
-    base_url = "http://www.mnet.com/chart/TOP100"
-    local_dt = utils.localize_time(day_time, "Asia/Seoul")
-    url = utils.append_date_string(base_url, local_dt, date_format="%Y%m")
+    local_dt = utils.localize_time(day_time, TIMEZONE)
+    url = utils.append_date_string(BASE_URL, local_dt, date_format="%Y%m")
     return utils.get_ranks(
-        url, "td.MMLItemTitle > div > div.MMLITitle_Box.info", parser)
+        url, SELECTOR, parser)
 
 
 def year(day_time=None):
-    base_url = "http://www.mnet.com/chart/TOP100"
-    local_dt = utils.localize_time(day_time, "Asia/Seoul")
-    url = utils.append_date_string(base_url, local_dt, date_format="%Y")
+    local_dt = utils.localize_time(day_time, TIMEZONE)
+    url = utils.append_date_string(BASE_URL, local_dt, date_format="%Y")
     return utils.get_ranks(
-        url, "td.MMLItemTitle > div > div.MMLITitle_Box.info", parser)
+        url, SELECTOR, parser)

@@ -2,6 +2,10 @@
 from mochart import utils
 
 
+BASE_URL = "https://www.melon.com/chart"
+SELECTOR = "tr"
+
+
 def parser(rows):
     """Parse texts accordingly from Melon table."""
 
@@ -38,8 +42,8 @@ def realtime():
           Reference:
           https://www.melon.com/customer/announce/infomAnnounce.htm?seq=668
     """
-    url = "https://www.melon.com/chart/index.htm"
-    return utils.get_ranks(url, "tr", parser)
+    url = f"{BASE_URL}/index.htm"
+    return utils.get_ranks(url, SELECTOR, parser)
 
 
 def trend(day_time=None):
@@ -47,26 +51,26 @@ def trend(day_time=None):
 
     NOTE: Historical value refreshes daily.
     """
-    base_url = "https://www.melon.com/chart/rise/index.htm"
+    base_url = f"{BASE_URL}/rise/index.htm"
     local_dt = utils.localize_time(day_time, "Asia/Seoul")
     url = utils.append_date_string(
         base_url, local_dt, date_key="dayTime", date_format="%Y%m%d%H")
-    return utils.get_ranks(url, "tr", parser)
+    return utils.get_ranks(url, SELECTOR, parser)
 
 
 def day():
     """Get latest daily ranks."""
-    url = "https://www.melon.com/chart/day/index.htm"
-    return utils.get_ranks(url, "tr", parser)
+    url = f"{BASE_URL}/day/index.htm"
+    return utils.get_ranks(url, SELECTOR, parser)
 
 
 def week():
     """Get latest weekly ranks."""
-    url = "https://www.melon.com/chart/week/index.htm"
-    return utils.get_ranks(url, "tr", parser)
+    url = f"{BASE_URL}/week/index.htm"
+    return utils.get_ranks(url, SELECTOR, parser)
 
 
 def month():
     """Get latest monthly ranks."""
-    url = "https://www.melon.com/chart/month/index.htm"
-    return utils.get_ranks(url, "tr", parser)
+    url = f"{BASE_URL}/month/index.htm"
+    return utils.get_ranks(url, SELECTOR, parser)
