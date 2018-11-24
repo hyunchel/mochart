@@ -18,13 +18,13 @@ def parser(rows):
     return ranks
 
 
-def realtime(day_time=None):
+def realtime():
     """Return realtime rankings."""
     url = f"{BASE_URL}&duration=1h"
     return utils.get_ranks(url, SELECTOR, parser)
 
 
-def day(day_time=None):
+def day():
     """Return rankings for the day."""
     url = f"{BASE_URL}&duration=1d"
     return utils.get_ranks(url, SELECTOR, parser)
