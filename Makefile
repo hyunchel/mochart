@@ -24,3 +24,6 @@ test-release:
 	python setup.py sdist
 	twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 	rm -rf dist/
+
+test-install:
+	pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple mochart
